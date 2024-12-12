@@ -3,8 +3,7 @@ const axios = require("axios");
 const sendEmail = async (email, subject, htmlContent) => {
   const headers = {
     "Content-Type": "application/json",
-    "api-key":
-      "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", // Ensure this is correct and in lowercase
+    "api-key": process.env.SENDIN_BLUE_API_KEY, // Ensure this is correct and in lowercase
   };
 
   const data = {
