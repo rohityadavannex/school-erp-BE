@@ -5,6 +5,7 @@ const {
   getAllUsers,
   getUserInfo,
   updateUser,
+  updateUserStatus,
 } = require("../../controllers/super-admin/usersController");
 const { isAuthorized } = require("../../helpers/helpers");
 var router = express.Router();
@@ -15,6 +16,7 @@ router
   .post("/create-user", isAuthorized, createUser);
 router
   .get("/user/:userId", isAuthorized, getUserInfo)
-  .patch("/user/:userId", isAuthorized, updateUser);
+  .patch("/user/:userId", isAuthorized, updateUser)
+  .patch("/update-status/user/:userId", isAuthorized, updateUserStatus);
 
 module.exports = router;

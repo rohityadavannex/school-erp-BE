@@ -21,7 +21,20 @@ const {
 
 exports.register = async (req, res) => {
   try {
-    const { email, name, password } = req.body;
+    const {
+      email,
+      name,
+      password,
+      instituteName,
+      instituteLogo,
+      phone,
+      image,
+      address,
+      country,
+      state,
+      city,
+      district,
+    } = req.body;
     const data = await User.findOne({ where: { email } });
 
     //if user exist and status is active
@@ -47,6 +60,15 @@ exports.register = async (req, res) => {
           password: hashedPassword,
           verifyToken: verificationToken,
           tokenTime: new Date(),
+          instituteName, // Save the new field
+          instituteLogo,
+          phone,
+          image,
+          address,
+          country,
+          state,
+          city,
+          district,
         },
         {
           where: {
@@ -69,6 +91,15 @@ exports.register = async (req, res) => {
       password: hashedPassword,
       verifyToken: verificationToken,
       tokenTime: new Date(),
+      instituteName, // Save the new field
+      instituteLogo,
+      phone,
+      image,
+      address,
+      country,
+      state,
+      city,
+      district,
     });
     res.send({ status: 200, message: "Sent verification email." });
   } catch (err) {
@@ -170,7 +201,18 @@ exports.getUserInfo = async (req, res) => {
 
 exports.updateUserInfo = async (req, res) => {
   try {
-    const { name, phone, address, city, state, country } = req.body;
+    const {
+      name,
+      instituteName,
+      instituteLogo,
+      phone,
+      image,
+      address,
+      country,
+      state,
+      city,
+      district,
+    } = req.body;
 
     const user = await User.findOne({ where: { id: req.userId } });
 
@@ -185,16 +227,26 @@ exports.updateUserInfo = async (req, res) => {
         fsResultHandler
       );
     }
+    if (req?.file?.instituteLogo) {
+      fs.unlink(
+        `${process.cwd()}/public/my-uploads/${user.get("instituteLogo")}`,
+        fsResultHandler
+      );
+    }
 
     await User.update(
       {
         name,
+        instituteName, // Save the new field
         phone,
+        image,
         address,
-        city,
-        state,
         country,
-        image: req?.file?.filename,
+        state,
+        city,
+        district,
+        image: req.files?.image?.[0]?.filename,
+        instituteLogo: req.files?.instituteLogo?.[0]?.filename,
       },
       { where: { id: req.userId } }
     );

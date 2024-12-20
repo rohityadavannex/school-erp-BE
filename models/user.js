@@ -20,6 +20,14 @@ const User = sequelize.define("User", {
   password: {
     type: DataTypes.STRING,
   },
+  instituteName: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }, // Add new field
+  instituteLogo: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }, // Add new field
   role: {
     type: DataTypes.INTEGER,
     defaultValue: 2,
@@ -40,6 +48,9 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING,
   },
   state: {
+    type: DataTypes.STRING,
+  },
+  district: {
     type: DataTypes.STRING,
   },
   city: {

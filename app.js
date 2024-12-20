@@ -33,6 +33,9 @@ var app = express();
 
 // Define allowed origins
 const allowedOrigins = [
+  "http://192.168.68.202:3000",
+  "http://192.168.68.158:3000",
+  "http://192.168.5.160:3000",
   "http://localhost:3000",
   "https://annex-crm-fe.vercel.app",
   "https://ecrm.we4php.com",

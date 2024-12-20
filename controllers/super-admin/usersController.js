@@ -93,16 +93,40 @@ exports.updateUser = async (req, res) => {
   }
 };
 
+exports.updateUserStatus = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { active } = req.body;
+
+    const data = await User.findOne({ where: { id: userId } });
+
+    if (Number(data?.id) !== Number(userId)) {
+      res.send({ status: 403, message: "Email is already in use." });
+      return;
+    }
+    await User.update(
+      {
+        active,
+      },
+      { where: { id: userId } }
+    );
+    res.send({ status: 200, message: "User status updated." });
+  } catch (err) {
+    console.log("updateUserStatus controller ==> ", err);
+    res.send({ status: 500, message: "Something went wrong.", error: err });
+  }
+};
 //to get all the users
 exports.getAllUsers = async (req, res) => {
   try {
+    const { search = "", offset = 0, length = 10 } = req.query;
     const data = req.query;
     const userData = await User.findAndCountAll({
-      limit: Number(data.length),
-      offset: Number(data.offset),
+      limit: Number(length),
+      offset: Number(offset),
       where: {
         name: {
-          [Op.like]: `%${data.search}%`,
+          [Op.like]: `%${search}%`,
         },
         role: {
           [Op.not]: 1,
