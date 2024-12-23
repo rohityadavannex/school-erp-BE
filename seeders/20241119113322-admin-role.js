@@ -10,6 +10,7 @@ module.exports = {
           id: 2,
           name: "Admin",
           active: 1,
+          createdBy: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

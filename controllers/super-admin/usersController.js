@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const User = require("../../models/user");
 
 exports.createUser = async (req, res) => {
+  console.log("create user");
   try {
     const {
       name,
@@ -25,6 +26,21 @@ exports.createUser = async (req, res) => {
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10);
+    const image = req.files?.image?.[0]?.filename;
+    const instituteLogo = req.files?.instituteLogo?.[0]?.filename;
+
+    if (image) {
+      fs.unlink(
+        `${process.cwd()}/public/my-uploads/${user.get("image")}`,
+        fsResultHandler
+      );
+    }
+    if (instituteLogo) {
+      fs.unlink(
+        `${process.cwd()}/public/my-uploads/${user.get("instituteLogo")}`,
+        fsResultHandler
+      );
+    }
 
     //if it's a new user
     await User.create({
@@ -39,6 +55,8 @@ exports.createUser = async (req, res) => {
       city,
       country,
       active,
+      image: image,
+      instituteLogo: instituteLogo,
     });
 
     res.send({ status: 200, message: "User added." });
@@ -67,7 +85,7 @@ exports.updateUser = async (req, res) => {
     const data = await User.findOne({ where: { email } });
 
     if (Number(data?.id) !== Number(userId)) {
-      res.send({ status: 403, message: "Email is already in use." });
+      res.send({ status: 403, message: "Permission denied." });
       return;
     }
     const hashedPassword = bcrypt.hashSync(password, 10);
@@ -93,16 +111,48 @@ exports.updateUser = async (req, res) => {
   }
 };
 
+exports.updateUserStatus = async (req, res) => {
+  try {
+    const { active, userId } = req.body;
+
+    const data = await User.findOne({ where: { id: userId } });
+
+    if (Number(data?.id) !== Number(userId)) {
+      res.send({ status: 403, message: "Permission denied." });
+      return;
+    }
+    await User.update(
+      {
+        active,
+      },
+      { where: { id: userId } }
+    );
+    res.send({ status: 200, message: "User status updated." });
+  } catch (err) {
+    console.log("updateUserStatus controller ==> ", err);
+    res.send({ status: 500, message: "Something went wrong.", error: err });
+  }
+};
 //to get all the users
 exports.getAllUsers = async (req, res) => {
   try {
+    const { search = "", offset = 0, length = 10 } = req.query;
     const data = req.query;
     const userData = await User.findAndCountAll({
-      limit: Number(data.length),
-      offset: Number(data.offset),
+      limit: Number(length),
+      offset: Number(offset),
+      attributes: {
+        exclude: [
+          "password",
+          "verifyToken",
+          "tokenTime",
+          "createdAt",
+          "updatedAt",
+        ],
+      },
       where: {
         name: {
-          [Op.like]: `%${data.search}%`,
+          [Op.like]: `%${search}%`,
         },
         role: {
           [Op.not]: 1,

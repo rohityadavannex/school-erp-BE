@@ -24,9 +24,15 @@ router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
 router.post("/update-password", isAuthorized, updatePassword);
 
-router
-  .get("/user-info", isAuthorized, getUserInfo)
-  .patch("/user-info", isAuthorized, upload.single("image"), updateUserInfo);
+router.get("/user-info", isAuthorized, getUserInfo).patch(
+  "/user-info",
+  isAuthorized,
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "instituteLogo", maxCount: 1 },
+  ]),
+  updateUserInfo
+);
 
 router.get("/role-access/:roleId", isAuthorized, getRoleData);
 

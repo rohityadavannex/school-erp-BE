@@ -23,6 +23,7 @@ exports.createRole = async (req, res) => {
     await Permissions.bulkCreate(allPermissions);
     res.send({ status: 200, message: "Role added." });
   } catch (err) {
+    console.log("===create role error ", err);
     res.send({ status: 500, message: "Something went wrong." });
   }
 };
