@@ -15,6 +15,7 @@ var usersRouter = require("./routes/users");
 var usersRouterSuperAdmin = require("./routes/super-admin/users");
 var rolesRouterSuperAdmin = require("./routes/super-admin/roles");
 var plansRouterSuperAdmin = require("./routes/super-admin/plans");
+var classesRouterSuperAdmin = require("./routes/super-admin/classes");
 var superAdminRouter = require("./routes/super-admin/superAdminRoutes");
 const { sequelize, checkDatabaseConnection } = require("./database/connection");
 
@@ -76,6 +77,7 @@ app.use("/api/users", usersRouter);
 app.use("/api/super-admin/users", usersRouterSuperAdmin);
 app.use("/api/super-admin/roles", rolesRouterSuperAdmin);
 app.use("/api/super-admin/plans", plansRouterSuperAdmin);
+app.use("/api/super-admin/classes", classesRouterSuperAdmin);
 app.use("/api/super-admin", superAdminRouter);
 
 // catch 404 and forward to error handler
