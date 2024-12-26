@@ -6,12 +6,13 @@ const { sequelize } = require("../../database/connection");
 // Create a class
 exports.createClass = async (req, res) => {
   try {
-    const { name, description, createdBy, active } = req.body;
+    const { name, description, active, schoolId } = req.body;
     const newClass = await Classes.create({
       name,
       description,
-      createdBy,
+      createdBy: req.userId,
       active,
+      schoolId,
     });
     res
       .status(201)
@@ -24,7 +25,10 @@ exports.createClass = async (req, res) => {
 // Get all classes
 exports.getClasses = async (req, res) => {
   try {
-    const classes = await Classes.findAll();
+    const { schoolId } = req.body;
+    const classes = await Classes.findAll({
+      where: { schoolId: schoolId },
+    });
     res.status(200).json({ data: classes });
   } catch (error) {
     res.status(500).json({ error: error.message });

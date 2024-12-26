@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../../database/connection");
 
-const Classes = sequelize.define(
-  "Classes",
+const Sections = sequelize.define(
+  "Sections",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -15,8 +15,25 @@ const Classes = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    description: {
+    category: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    capacity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    class: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    teacher: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    note: {
       type: DataTypes.TEXT,
+      allowNull: true,
     },
     createdBy: {
       type: DataTypes.INTEGER,
@@ -36,4 +53,4 @@ const Classes = sequelize.define(
     freezeTableName: true,
   }
 );
-module.exports = Classes;
+module.exports = Sections;

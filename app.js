@@ -17,6 +17,12 @@ var rolesRouterSuperAdmin = require("./routes/super-admin/roles");
 var plansRouterSuperAdmin = require("./routes/super-admin/plans");
 var classesRouterSuperAdmin = require("./routes/super-admin/classes");
 var superAdminRouter = require("./routes/super-admin/superAdminRoutes");
+var designationsRouterSuperAdmin = require("./routes/super-admin/designations");
+var subjectsRouterSuperAdmin = require("./routes/super-admin/subjects");
+var departmentsRouterSuperAdmin = require("./routes/super-admin/departments");
+var categoriesRouterSuperAdmin = require("./routes/super-admin/categories");
+var academicYearsRouterSuperAdmin = require("./routes/super-admin/academicyears");
+var sectionsRouterSuperAdmin = require("./routes/super-admin/sections");
 const { sequelize, checkDatabaseConnection } = require("./database/connection");
 
 var app = express();
@@ -78,6 +84,12 @@ app.use("/api/super-admin/users", usersRouterSuperAdmin);
 app.use("/api/super-admin/roles", rolesRouterSuperAdmin);
 app.use("/api/super-admin/plans", plansRouterSuperAdmin);
 app.use("/api/super-admin/classes", classesRouterSuperAdmin);
+app.use("/api/super-admin/designations", designationsRouterSuperAdmin);
+app.use("/api/super-admin/subjects", subjectsRouterSuperAdmin);
+app.use("/api/super-admin/departments", departmentsRouterSuperAdmin);
+app.use("/api/super-admin/categories", categoriesRouterSuperAdmin);
+app.use("/api/super-admin/academic-years", academicYearsRouterSuperAdmin);
+app.use("/api/super-admin/sections", sectionsRouterSuperAdmin);
 app.use("/api/super-admin", superAdminRouter);
 
 // catch 404 and forward to error handler

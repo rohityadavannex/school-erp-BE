@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../../database/connection");
 
-const Classes = sequelize.define(
-  "Classes",
+const Categories = sequelize.define(
+  "Categories",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -15,9 +15,6 @@ const Classes = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    description: {
-      type: DataTypes.TEXT,
-    },
     createdBy: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -25,7 +22,7 @@ const Classes = sequelize.define(
     active: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: true,
     },
     schoolId: {
       type: DataTypes.INTEGER,
@@ -36,4 +33,4 @@ const Classes = sequelize.define(
     freezeTableName: true,
   }
 );
-module.exports = Classes;
+module.exports = Categories;

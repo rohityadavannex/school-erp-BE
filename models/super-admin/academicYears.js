@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../../database/connection");
 
-const Classes = sequelize.define(
-  "Classes",
+const AcademicYears = sequelize.define(
+  "AcademicYears",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -11,12 +11,9 @@ const Classes = sequelize.define(
       primaryKey: true,
       unique: true,
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    description: {
+    note: {
       type: DataTypes.TEXT,
+      allowNull: true,
     },
     createdBy: {
       type: DataTypes.INTEGER,
@@ -25,7 +22,15 @@ const Classes = sequelize.define(
     active: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: true,
+    },
+    startSession: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    endSession: {
+      type: DataTypes.DATE,
+      allowNull: true,
     },
     schoolId: {
       type: DataTypes.INTEGER,
@@ -36,4 +41,4 @@ const Classes = sequelize.define(
     freezeTableName: true,
   }
 );
-module.exports = Classes;
+module.exports = AcademicYears;
