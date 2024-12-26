@@ -12,14 +12,15 @@ const { upload } = require("../../utils/uploadFile");
 var router = express.Router();
 
 // define the home page route
-router
-  .get("/users-list", isAuthorized, getAllUsers)
-  .post(
-    "/create-user",
-    isAuthorized,
-    upload.single("instituteLogo"),
-    createUser
-  );
+router.get("/users-list", isAuthorized, getAllUsers).post(
+  "/create-user",
+  isAuthorized,
+  upload.fields([
+    // { name: "image", maxCount: 1 },
+    { name: "instituteLogo", maxCount: 1 },
+  ]),
+  createUser
+);
 router
   .get("/user/:userId", isAuthorized, getUserInfo)
   .patch("/user/:userId", isAuthorized, updateUser)

@@ -37,6 +37,7 @@ const User = sequelize.define("User", {
   },
   alternatePhone: {
     type: DataTypes.BIGINT,
+    allowNull: true,
   },
   image: {
     type: DataTypes.STRING,
