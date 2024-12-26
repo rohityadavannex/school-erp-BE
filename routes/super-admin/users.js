@@ -16,7 +16,7 @@ router.get("/users-list", isAuthorized, getAllUsers).post(
   "/create-user",
   isAuthorized,
   upload.fields([
-    // { name: "image", maxCount: 1 },
+    { name: "image", maxCount: 1 },
     { name: "instituteLogo", maxCount: 1 },
   ]),
   createUser

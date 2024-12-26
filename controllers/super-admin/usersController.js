@@ -20,8 +20,6 @@ exports.createUser = async (req, res) => {
     } = req.body;
     const data = await User.findOne({ where: { email } });
 
-    console.log("line 23 ", alternatePhone, typeof alternatePhone);
-
     //if user exist and status is active
     if (data?.active) {
       res.send({ status: 409, message: "User with this email already exist." });
@@ -39,7 +37,7 @@ exports.createUser = async (req, res) => {
       password: hashedPassword,
       active: true,
       phone,
-      alternatePhone: alternatePhone,
+      alternatePhone,
       address,
       state,
       city,
