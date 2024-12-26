@@ -1,5 +1,6 @@
 const { Op } = require("sequelize");
 const bcrypt = require("bcrypt");
+const fs = require("fs");
 const User = require("../../models/user");
 
 exports.createUser = async (req, res) => {
@@ -8,7 +9,7 @@ exports.createUser = async (req, res) => {
     const {
       name,
       email,
-      password,
+      password = "12345",
       phone,
       alternatePhone,
       address,
@@ -28,19 +29,6 @@ exports.createUser = async (req, res) => {
     const hashedPassword = bcrypt.hashSync(password, 10);
     const image = req.files?.image?.[0]?.filename;
     const instituteLogo = req.files?.instituteLogo?.[0]?.filename;
-
-    if (image) {
-      fs.unlink(
-        `${process.cwd()}/public/my-uploads/${user.get("image")}`,
-        fsResultHandler
-      );
-    }
-    if (instituteLogo) {
-      fs.unlink(
-        `${process.cwd()}/public/my-uploads/${user.get("instituteLogo")}`,
-        fsResultHandler
-      );
-    }
 
     //if it's a new user
     await User.create({

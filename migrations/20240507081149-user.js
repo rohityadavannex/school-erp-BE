@@ -41,6 +41,7 @@ module.exports = {
       },
       alternatePhone: {
         type: Sequelize.BIGINT,
+        allowNull: true,
       },
       address: {
         type: Sequelize.STRING,
